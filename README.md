@@ -30,7 +30,3 @@ alternatively, make can be called directly to d so like:
 make clean build
 
 make run
-
-## Data Sample
-![image](data/1.gif)
-![image](output/1.g_boxFilterOutput.pgm)
