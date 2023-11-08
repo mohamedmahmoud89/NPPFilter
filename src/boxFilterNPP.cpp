@@ -106,9 +106,6 @@ void runFilter(const std::string &sFilename, const std::string &sResultFilename)
 
   saveImage(sResultFilename, oHostDst);
   std::cout << "Saved image: " << sResultFilename << std::endl;
-
-  nppiFree(oDeviceSrc.data());
-  nppiFree(oDeviceDst.data());
 }
 
 int checkFileError(const std::string& sFilename)
@@ -163,21 +160,21 @@ int main(int argc, char *argv[])
 
       const std::string sResultPath = "output/";
       std::string sResultFilename;
-      std::string extension;
 
       std::string::size_type dot = sFilename.rfind('.');
+      std::string::size_type slash = sFilename.rfind('/');
 
-      if (dot != std::string::npos)
+      if (dot != std::string::npos && slash != std::string::npos)
       {
-        sResultFilename = sFilename.substr(sFilename.rfind('/') + 1, dot - sFilename.rfind('/') + 1);
-        extension = sFilename.substr(dot + 1, sFilename.size() - dot - 1);
+        sResultFilename = sFilename.substr(slash + 1, dot - slash + 1);
       }
 
-      sResultFilename = sResultPath + sResultFilename  + "_boxFilterOutput." + extension;
+      sResultFilename = sResultPath + sResultFilename  + "_boxFilterOutput.pgm";
 
       runFilter(sFilename, sResultFilename);
     }
 
+    printf("Finishing...\n");
     exit(EXIT_SUCCESS);
   }
   catch (npp::Exception &rException)
